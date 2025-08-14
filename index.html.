@@ -54,8 +54,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const rewardBtn = document.getElementById('rewardBtn');
             const messageDisplay = document.getElementById('message');
-            let discordWebhookUrl = 'https://discord.com/api/webhooks/1405567602524295208/MJh6nabQSyR2DtPFiAAZkMcHh406v0pMvyjbe7qLGVcWAC1ckfNDqxJnzd2skoHba-Q0'; // Dán URL Webhook của bạn vào đây
-
+            let discordWebhookUrl = 'https://discord.com/api/webhooks/123456789...'; 
             rewardBtn.addEventListener('click', function() {
                 if (!discordWebhookUrl) {
                     messageDisplay.textContent = 'Lỗi: Vui lòng dán URL Discord Webhook vào code.';
