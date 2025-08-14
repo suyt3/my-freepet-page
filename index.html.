@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận Thưởng Hcoin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        #rewardBtn {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #rewardBtn:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nhận Thưởng Hcoin</h1>
+        <p>Nhấp vào nút dưới đây để nhận phần thưởng của bạn!</p>
+        <button id="rewardBtn">Nhận Thưởng Ngay</button>
+        <p id="message"></p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rewardBtn = document.getElementById('rewardBtn');
+            const messageDisplay = document.getElementById('message');
+            let discordWebhookUrl = ''; // Dán URL Webhook của bạn vào đây
+
+            rewardBtn.addEventListener('click', function() {
+                if (!discordWebhookUrl) {
+                    messageDisplay.textContent = 'Lỗi: Vui lòng dán URL Discord Webhook vào code.';
+                    messageDisplay.style.color = '#dc3545';
+                    return;
+                }
+
+                messageDisplay.textContent = 'Đang xử lý...';
+                messageDisplay.style.color = '#343a40';
+
+                fetch(discordWebhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: 'Có một người vừa nhấn nút để nhận Hcoin!',
+                        username: 'Hcoin Bot',
+                        avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png'
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        messageDisplay.textContent = 'Nhận thưởng thành công! Vui lòng kiểm tra Discord của bạn.';
+                        messageDisplay.style.color = '#28a745';
+                        rewardBtn.disabled = true;
+                        rewardBtn.textContent = 'Đã Nhận Thưởng';
+                    } else {
+                        messageDisplay.textContent = 'Lỗi: Không thể gửi thông báo đến Discord.';
+                        messageDisplay.style.color = '#dc3545';
+                    }
+                })
+                .catch(error => {
+                    messageDisplay.textContent = 'Lỗi kết nối: ' + error.message;
+                    messageDisplay.style.color = '#dc3545';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
